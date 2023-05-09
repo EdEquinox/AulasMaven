@@ -52,9 +52,20 @@ public class RootPane extends BorderPane {
     }
 
     private void registerHandlers() {
-        tbtLine.setOnAction(a -> update());
-        tbtRect.setOnAction(a -> update());
-        tbtEllipse.setOnAction(a -> update());
+        centralPane.setOnMousePressed(e ->{
+            model.setP1(e.getX(),e.getY());
+            model.setP2(e.getX(),e.getY());
+            model.defineColor();
+            update();
+        });
+        centralPane.setOnMouseDragged(e -> {
+            model.setP2(e.getX(),e.getY());
+            update();
+        });
+        centralPane.setOnMouseReleased(e ->{
+            model.setP2(e.getX(),e.getY());
+            update();
+        });
         centralPane.setOnMouseClicked(e -> {
             ModelLog.getInstance().add(
                     String.format("%.2f %.2f %b %b %b",
@@ -66,11 +77,29 @@ public class RootPane extends BorderPane {
 
     private void update() {
         centralPane.getChildren().clear();
-        if (tbtLine.isSelected())
-            centralPane.getChildren().add(new Line(50,50,250,150));
-        else if (tbtRect.isSelected())
-            centralPane.getChildren().add(new Rectangle(50,50,250,150));
-        else if (tbtEllipse.isSelected())
-            centralPane.getChildren().add(new Ellipse(175,100,100,50));
+        if (tbtLine.isSelected()){
+            Line line = new Line(50,50,250,150);
+            line.setStartY(model.getY1());
+            line.setStartX(model.getX1());
+            line.setEndX(model.getX2());
+            line.setEndY(model.getY2());
+            centralPane.getChildren().add(line);
+        }
+        else if (tbtRect.isSelected()){
+            Rectangle rectangle = new Rectangle(50,50,250,150);
+            rectangle.setY(model.getY1());
+            rectangle.setX(model.getX1());
+            rectangle.setWidth(model.getX2()-model.getX1());
+            rectangle.setHeight(model.getY2()-model.getY1());
+            centralPane.getChildren().add(rectangle);
+        }
+        else if (tbtEllipse.isSelected()){
+            Ellipse ellipse = new Ellipse(50,50,250,150);
+            ellipse.setCenterX(model.getCX());
+            ellipse.setCenterY(model.getCY());
+            ellipse.setRadiusX(model.getX2()-model.getX1());
+            ellipse.setRadiusY(model.getY2()-model.getY1());
+            centralPane.getChildren().add(ellipse);
+        }
     }
 }

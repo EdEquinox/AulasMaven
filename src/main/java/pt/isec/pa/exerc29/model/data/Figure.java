@@ -30,6 +30,56 @@ public class Figure {
         this.b = b;
     }
 
+    public void setP1(double x1, double y1) {
+        this.x1 = x1;
+        this.y1 = y1;
+    }
+
+    public void setP2(double x2, double y2) {
+        this.x2 = x2;
+        this.y2 = y2;
+    }
+
+    public double getX1() {
+        return x1;
+    }
+
+    public double getY1() {
+        return y1;
+    }
+
+    public double getX2() {
+        return x2;
+    }
+
+    public double getY2() {
+        return y2;
+    }
+
+    public double getR() {
+        return r;
+    }
+
+    public double getG() {
+        return g;
+    }
+
+    public double getB() {
+        return b;
+    }
+
+    public boolean isFill() {
+        return fill;
+    }
+
+    public double getCX() {
+        return (x1+x2)/2.0;
+    }
+
+    public double getCY() {
+        return (y1+y2)/2.0;
+    }
+
     @Override
     public String toString() {
         return String.format("Figure { (%.2f,%.2f)-(%.2f,%.2f) color= [%.2f,%.2f,%.2f] }",
